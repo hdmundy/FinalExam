@@ -42,6 +42,7 @@ test_high <- high[validation]
 #*************** USE THE TRAINING DATASET *******************************
 #*************** USE "high" AS DEPENDENT VARIABLE ***********************
 
+tree_model = tree(high ~., training_data )
 
 #plot the tree
 plot(tree_model, type="uniform")
@@ -57,10 +58,15 @@ test_high <- as.factor(test_high)
 
 #create the confusion matrix with the prediction 
 #********************* CREATE & DISPLAY THE CONFUSION MATRIX ******************
+confuse <- confusionMatrix(data=tree_pred, reference = test_high)
 
+confuse
 
 
 #******************************* PRUNE & PLOT THE TREE *******************************
 #******************* NOTE: USE 7 AS THE BEST MODEL TO PRUNE **************
 
 
+pruned <- prune.misclass(tree_model, best=7)
+plot(pruned, type="uniform")
+text(pruned, pretty=0)
